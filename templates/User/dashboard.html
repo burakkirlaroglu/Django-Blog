@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="container">
+    <h3> Dashboard </h3>
+<hr>
+<p> Hoşgeldiniz {{request.user.username}} </p>
+<hr>
+<a class="btn btn-success" href="{% url 'article:addarticle' %}">Add Article</a>
+<p>Article Count You Have: {{count}}</p>
+</div>
+<br>
+{% if article %}
+<div class="container">
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Article Id</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Created Date</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for art in article %}
+            <tr>
+                <td>{{art.id}}</td>
+                <td> <a href="{% url 'article:detail' art.id %}">{{art.title}}</a></td>
+                <td>{{art.author}}</td>
+                <td>{{art.creted_date}}</td>
+                <td><a class="btn btn-warning" href="{% url 'article:update' art.id %}">Update</a></td>
+                <td><a class="btn btn-danger" href="{% url 'article:delete' art.id %}">Delete</a></td>
+            </tr>  
+            {% endfor %}
+        </tbody>
+       
+    </table>
+</div>
+{% else %}
+<div class="container">
+<div class="alert alert-danger">Makale bulunmuyor</div>
+</div>
+{% endif %}
+
+{% endblock body %}
